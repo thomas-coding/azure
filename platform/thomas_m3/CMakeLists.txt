@@ -5,7 +5,7 @@ project(thomas_m3
     LANGUAGES C ASM
 )
 
-set(TARGET "thomas_m3.elf")
+set(TARGET "thomas_m3")
 enable_language( C ASM )
 
 # Compile threadx kernel
@@ -31,15 +31,15 @@ set(SRC_LIST
     tx_initialize_low_level.S)
 
 # Target
-add_executable(${TARGET} "")
+add_executable(${TARGET}.elf "")
 
-target_sources(${TARGET}
+target_sources(${TARGET}.elf
     PRIVATE
     ${SRC_LIST}
 )
 
 add_custom_target(${TARGET}.bin ALL
-    COMMAND ${OBJCOPY} -O binary ${TARGET} ${TARGET}.bin
-    COMMAND ${OBJDUMP} -xd ${TARGET} > ${TARGET}.asm
-    DEPENDS ${TARGET}
+    COMMAND ${OBJCOPY} -O binary ${TARGET}.elf ${TARGET}.bin
+    COMMAND ${OBJDUMP} -xd ${TARGET}.elf > ${TARGET}.asm
+    DEPENDS ${TARGET}.elf
 )
