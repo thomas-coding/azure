@@ -190,8 +190,8 @@ UINT    status;
         /* Increment the thread counter.  */
         thread_0_counter++;
 
-        /* Sleep for 10 ticks.  */
-        tx_thread_sleep(10);
+        /* Sleep for 100 ticks.  */
+        tx_thread_sleep(100);
 
         /* Set event flag 0 to wakeup thread 5.  */
         status =  tx_event_flags_set(&event_flags_0, 0x1, TX_OR);
@@ -310,6 +310,7 @@ ULONG   actual_flags;
         /* Wait for event flag 0.  */
         status =  tx_event_flags_get(&event_flags_0, 0x1, TX_OR_CLEAR, 
                                                 &actual_flags, TX_WAIT_FOREVER);
+        printf("blinking\n");
 
         /* Check status.  */
         if ((status != TX_SUCCESS) || (actual_flags != 0x1))
