@@ -1,3 +1,18 @@
 [submodule "threadx"]
 	path = threadx
 	url = https://github.com/azure-rtos/threadx.git
+[submodule "filex"]
+	path = filex
+	url = https://github.com/thomas-coding/filex.git
+[submodule "netx"]
+	path = netx
+	url = https://github.com/thomas-coding/netx.git
+[submodule "usbx"]
+	path = usbx
+	url = https://github.com/thomas-coding/usbx.git
+[submodule "levelx"]
+	path = levelx
+	url = https://github.com/thomas-coding/levelx.git
+[submodule "guix"]
+	path = guix
+	url = https://github.com/thomas-coding/guix.git
