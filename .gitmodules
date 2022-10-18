@@ -16,3 +16,6 @@
 [submodule "guix"]
 	path = guix
 	url = https://github.com/thomas-coding/guix.git
+[submodule "netxduo"]
+	path = netxduo
+	url = https://github.com/thomas-coding/netxduo.git
