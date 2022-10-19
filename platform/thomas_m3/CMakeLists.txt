@@ -83,6 +83,11 @@ elseif("${CONFIG_DEMO}" STREQUAL "netxduo")
         ${SRC_LIST}
         ${CMAKE_CURRENT_LIST_DIR}/demo/netxduo/demo_netx_duo_udp.c
         )
+elseif("${CONFIG_DEMO}" STREQUAL "usbx")
+    set(SRC_LIST
+        ${SRC_LIST}
+        ${CMAKE_CURRENT_LIST_DIR}/demo/usbx/demo_usbx.c
+        )
 else()
     message(FATAL_ERROR "${CONFIG_DEMO} does not have reasonable demo to run")
 endif()
