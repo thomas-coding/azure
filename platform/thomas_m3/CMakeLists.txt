@@ -73,6 +73,11 @@ elseif("${CONFIG_DEMO}" STREQUAL "netx")
         ${SRC_LIST}
         ${CMAKE_CURRENT_LIST_DIR}/demo/netx/demo_netx_udp.c
         )
+elseif("${CONFIG_DEMO}" STREQUAL "filex")
+    set(SRC_LIST
+        ${SRC_LIST}
+        ${CMAKE_CURRENT_LIST_DIR}/demo/filex/demo_filex.c
+        )
 else()
     message(FATAL_ERROR "${CONFIG_DEMO} does not have reasonable demo to run")
 endif()
