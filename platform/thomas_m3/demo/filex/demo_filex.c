@@ -1,5 +1,7 @@
 /* This is a small demo of the high-performance FileX FAT file system. It includes setup for
    a small 34KB RAM disk and a loop that writes and reads a small file.  */
+#include "stdio.h"
+
 #include "fx_api.h"
 #ifdef FX_ENABLE_FAULT_TOLERANT
 #include "fx_fault_tolerant.h"
@@ -225,6 +227,8 @@ CHAR  local_buffer[30];
         /* Read the first 28 bytes of the test file.  */
         status =  fx_file_read(&my_file, local_buffer, 28, &actual);
 
+        printf("file read, name:%s context:%s\n", my_file.fx_file_name_buffer, local_buffer);
+
         /* Check the file read status.  */
         if ((status != FX_SUCCESS) || (actual != 28))
         {
@@ -258,6 +262,9 @@ CHAR  local_buffer[30];
         /* Increment the thread counter, which represents the number
            of successful passes through this loop.  */
         thread_0_counter++;
+
+        /* Sleep for 100 ticks.  */
+        tx_thread_sleep(100);
 
     } while (1);
 
