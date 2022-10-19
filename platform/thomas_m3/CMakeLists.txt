@@ -88,6 +88,11 @@ elseif("${CONFIG_DEMO}" STREQUAL "usbx")
         ${SRC_LIST}
         ${CMAKE_CURRENT_LIST_DIR}/demo/usbx/demo_usbx.c
         )
+elseif("${CONFIG_DEMO}" STREQUAL "levelx")
+    set(SRC_LIST
+        ${SRC_LIST}
+        ${CMAKE_CURRENT_LIST_DIR}/demo/levelx/demo_filex_nor_flash.c
+        )
 else()
     message(FATAL_ERROR "${CONFIG_DEMO} does not have reasonable demo to run")
 endif()
