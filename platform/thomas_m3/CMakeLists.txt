@@ -8,6 +8,8 @@ project(thomas_m3
 set(TARGET "thomas_m3")
 enable_language( C ASM )
 
+include(config.cmake)
+
 # Define ThreadX user configuration
 set(TX_USER_FILE "${CMAKE_CURRENT_LIST_DIR}/tx_user.h" CACHE STRING "Enable TX user configuration")
 
@@ -18,16 +20,34 @@ include_directories(../../threadx/ports/cortex_m3/gnu/inc)
 include_directories(../../filex/common/inc)
 include_directories(../../filex/ports/cortex_m3/gnu/inc)
 
-# Add azure kernel and x
-add_subdirectory(../../usbx usb)
-add_subdirectory(../../netxduo net)
-add_subdirectory(../../levelx level)
-add_subdirectory(../../filex file)
-add_subdirectory(../../guix gui)
-add_subdirectory(../../threadx kernel)
+# Add azure kernel and components
+if(${CONFIG_USBX})
+    add_subdirectory(../../usbx usb)
+    link_libraries(usbx)
+endif()
 
-# Link libthreadx.a
-link_libraries(usbx netxduo levelx filex guix threadx)
+if(${CONFIG_NETXDUO})
+    add_subdirectory(../../netxduo netduo)
+    link_libraries(netxduo)
+endif()
+
+if(${CONFIG_LEVELX})
+    add_subdirectory(../../levelx level)
+    link_libraries(levelx)
+endif()
+
+if(${CONFIG_FILEX})
+    add_subdirectory(../../filex file)
+    link_libraries(filex)
+endif()
+
+if(${CONFIG_GUIX})
+    add_subdirectory(../../guix gui)
+    link_libraries(guix)
+endif()
+
+add_subdirectory(../../threadx threadx)
+link_libraries(threadx)
 
 # Link target
 set(LD_SCRIPT "thomas_m3.ld")
@@ -41,6 +61,21 @@ set(SRC_LIST
     cortexm3_crt0.S
     cortexm3_vectors.S
     tx_initialize_low_level.S)
+
+# Which Demo to build
+if("${CONFIG_DEMO}" STREQUAL "threadx")
+    set(SRC_LIST
+        ${SRC_LIST}
+        ${CMAKE_CURRENT_LIST_DIR}/demo/threadx/sample_threadx.c
+        )
+elseif("${CONFIG_DEMO}" STREQUAL "netx")
+    set(SRC_LIST
+        ${SRC_LIST}
+        ${CMAKE_CURRENT_LIST_DIR}/demo/netx/demo_netx_udp.c
+        )
+else()
+    message(FATAL_ERROR "${CONFIG_DEMO} does not have reasonable demo to run")
+endif()
 
 # Target
 add_executable(${TARGET}.elf "")
