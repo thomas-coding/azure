@@ -93,8 +93,13 @@
 #define TX_MINIMUM_STACK                        ????         
 #define TX_THREAD_USER_EXTENSION                ????
 #define TX_TIMER_THREAD_STACK_SIZE              ????
-#define TX_TIMER_THREAD_PRIORITY                ????
 */
+
+/* Simple demo, let two demo threads running, set timer thread priority to lower */
+#ifdef SIMPLE_DEMO
+#define TX_TIMER_THREAD_PRIORITY                10
+#endif
+
 
 /* Determine if timer expirations (application timers, timeouts, and tx_thread_sleep calls 
    should be processed within the a system timer thread or directly in the timer ISR. 

@@ -88,9 +88,9 @@ void    tx_application_define(void *first_unused_memory)
                      0,                             //thread parm input
                      &simple_thread_0_stack[0],     //thread stack
                      DEMO_STACK_SIZE,               //thread stack size
-                     16,                            //thread priority
-                     16,                            //thread preempt threshold
-                     1000,                          //thread time slice
+                     0,                             //thread priority
+                     0,                             //thread preempt threshold
+                     100,                          //thread time slice
                      TX_AUTO_START);                //thread auto start
 
     tx_thread_create(&simple_thread_1,              //thread struct
@@ -99,9 +99,9 @@ void    tx_application_define(void *first_unused_memory)
                      0,                             //thread parm input
                      &simple_thread_1_stack[0],     //thread stack
                      DEMO_STACK_SIZE,               //thread stack size
-                     16,                            //thread priority
-                     16,                            //thread preempt threshold
-                     1000,                          //thread time slice
+                     0,                             //thread priority
+                     0,                             //thread preempt threshold
+                     100,                          //thread time slice
                      TX_AUTO_START);                //thread auto start
 #else
 CHAR    *pointer = TX_NULL;
@@ -215,8 +215,11 @@ void    simple_thread_0_entry(ULONG thread_input)
     while(1)
     {
         printf("simple thread 0 running\n");
+
+        for(int i = 0; i < 0xfffffff; i++)
+            asm volatile("nop");
         /* Sleep for 100 ticks.  */
-        tx_thread_sleep(100);
+        //tx_thread_sleep(100);
     }
 }
 
@@ -226,8 +229,10 @@ void    simple_thread_1_entry(ULONG thread_input)
     while(1)
     {
         printf("simple thread 1 running\n");
+        for(int i = 0; i < 0xfffffff; i++)
+            asm volatile("nop");
         /* Sleep for 100 ticks.  */
-        tx_thread_sleep(100);
+        //tx_thread_sleep(100);
     }
 }
 #endif
