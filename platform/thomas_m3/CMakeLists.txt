@@ -63,35 +63,36 @@ set(SRC_LIST
     tx_initialize_low_level.S)
 
 # Which Demo to build
+set(DEMO_DIR ${CMAKE_CURRENT_LIST_DIR}/../demo)
 if("${CONFIG_DEMO}" STREQUAL "threadx")
     set(SRC_LIST
         ${SRC_LIST}
-        ${CMAKE_CURRENT_LIST_DIR}/demo/threadx/sample_threadx.c
+        ${DEMO_DIR}/threadx/sample_threadx.c
         )
 elseif("${CONFIG_DEMO}" STREQUAL "netx")
     set(SRC_LIST
         ${SRC_LIST}
-        ${CMAKE_CURRENT_LIST_DIR}/demo/netx/demo_netx_udp.c
+        ${DEMO_DIR}/netx/demo_netx_udp.c
         )
 elseif("${CONFIG_DEMO}" STREQUAL "filex")
     set(SRC_LIST
         ${SRC_LIST}
-        ${CMAKE_CURRENT_LIST_DIR}/demo/filex/demo_filex.c
+        ${DEMO_DIR}/filex/demo_filex.c
         )
 elseif("${CONFIG_DEMO}" STREQUAL "netxduo")
     set(SRC_LIST
         ${SRC_LIST}
-        ${CMAKE_CURRENT_LIST_DIR}/demo/netxduo/demo_netx_duo_udp.c
+        ${DEMO_DIR}/netxduo/demo_netx_duo_udp.c
         )
 elseif("${CONFIG_DEMO}" STREQUAL "usbx")
     set(SRC_LIST
         ${SRC_LIST}
-        ${CMAKE_CURRENT_LIST_DIR}/demo/usbx/demo_usbx.c
+        ${DEMO_DIR}/usbx/demo_usbx.c
         )
 elseif("${CONFIG_DEMO}" STREQUAL "levelx")
     set(SRC_LIST
         ${SRC_LIST}
-        ${CMAKE_CURRENT_LIST_DIR}/demo/levelx/demo_filex_nor_flash.c
+        ${DEMO_DIR}/demo_filex_nor_flash.c
         )
 else()
     message(FATAL_ERROR "${CONFIG_DEMO} does not have reasonable demo to run")
