@@ -69,6 +69,12 @@ if("${CONFIG_DEMO}" STREQUAL "threadx")
         ${SRC_LIST}
         ${DEMO_DIR}/threadx/sample_threadx.c
         )
+elseif("${CONFIG_DEMO}" STREQUAL "threadx-simple")
+    add_definitions(-DSIMPLE_DEMO)
+    set(SRC_LIST
+        ${SRC_LIST}
+        ${DEMO_DIR}/threadx/sample_threadx.c
+        )
 elseif("${CONFIG_DEMO}" STREQUAL "netx")
     set(SRC_LIST
         ${SRC_LIST}

@@ -29,6 +29,13 @@ TX_BYTE_POOL            byte_pool_0;
 TX_BLOCK_POOL           block_pool_0;
 UCHAR                   memory_area[DEMO_BYTE_POOL_SIZE];
 
+#ifdef SIMPLE_DEMO
+TX_THREAD               simple_thread_0;
+TX_THREAD               simple_thread_1;
+static uint8_t simple_thread_0_stack[DEMO_STACK_SIZE];
+static uint8_t simple_thread_1_stack[DEMO_STACK_SIZE];
+#endif
+
 
 /* Define the counters used in the demo application...  */
 
@@ -53,6 +60,10 @@ void    thread_3_and_4_entry(ULONG thread_input);
 void    thread_5_entry(ULONG thread_input);
 void    thread_6_and_7_entry(ULONG thread_input);
 
+#ifdef SIMPLE_DEMO
+void    simple_thread_0_entry(ULONG thread_input);
+void    simple_thread_1_entry(ULONG thread_input);
+#endif
 
 /* Define main entry point.  */
 
@@ -69,7 +80,30 @@ int main()
 
 void    tx_application_define(void *first_unused_memory)
 {
+#ifdef SIMPLE_DEMO
+    /* Create the test task.  */
+    tx_thread_create(&simple_thread_0,              //thread struct
+                     "simple thread 0",             //thread name
+                     simple_thread_0_entry,         //thread entry function
+                     0,                             //thread parm input
+                     &simple_thread_0_stack[0],     //thread stack
+                     DEMO_STACK_SIZE,               //thread stack size
+                     16,                            //thread priority
+                     16,                            //thread preempt threshold
+                     1000,                          //thread time slice
+                     TX_AUTO_START);                //thread auto start
 
+    tx_thread_create(&simple_thread_1,              //thread struct
+                     "simple thread 1",             //thread name
+                     simple_thread_1_entry,         //thread entry function
+                     0,                             //thread parm input
+                     &simple_thread_1_stack[0],     //thread stack
+                     DEMO_STACK_SIZE,               //thread stack size
+                     16,                            //thread priority
+                     16,                            //thread preempt threshold
+                     1000,                          //thread time slice
+                     TX_AUTO_START);                //thread auto start
+#else
 CHAR    *pointer = TX_NULL;
 
 
@@ -171,9 +205,32 @@ CHAR    *pointer = TX_NULL;
 
     /* Release the block back to the pool.  */
     tx_block_release(pointer);
+#endif
 }
 
+#ifdef SIMPLE_DEMO
+void    simple_thread_0_entry(ULONG thread_input)
+{
+    printf("simple thread 0 start======\n");
+    while(1)
+    {
+        printf("simple thread 0 running\n");
+        /* Sleep for 100 ticks.  */
+        tx_thread_sleep(100);
+    }
+}
 
+void    simple_thread_1_entry(ULONG thread_input)
+{
+    printf("simple thread 1 start======\n");
+    while(1)
+    {
+        printf("simple thread 1 running\n");
+        /* Sleep for 100 ticks.  */
+        tx_thread_sleep(100);
+    }
+}
+#endif
 
 /* Define the test threads.  */
 
