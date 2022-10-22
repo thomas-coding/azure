@@ -1,0 +1,10 @@
+# Feature config
+set(CONFIG_PROJECT "cortex-m33")
+set(CONFIG_DEMO "threadx-simple")
+set(CONFIG_TX_SINGLE_MODE_SECURE y)
+set(CONFIG_TX_SINGLE_MODE_NON_SECURE n)
+set(CONFIG_USBX n)
+set(CONFIG_NETXDUO n)
+set(CONFIG_LEVELX n)
+set(CONFIG_FILEX n)
+set(CONFIG_GUIX n)
