@@ -25,14 +25,6 @@ SECTIONS
 		KEEP(*(.vectors .vectors.*))
 	} > FLASH
 
-
-	.nsc (0x10100000): ALIGN (32)
-	{
-		. = ALIGN(32);
-		*(.nsc*)
-		. = ALIGN(32);
-	} > FLASH
-
 	.text :
 	{
 		*(.text*)
@@ -74,6 +66,13 @@ SECTIONS
 		*(.ARM.exidx* .gnu.linkonce.armexidx.*)
 	} > FLASH
 	__exidx_end = .;
+
+	.nsc (0x10100000): ALIGN (32)
+	{
+		. = ALIGN(32);
+		*(.nsc*)
+		. = ALIGN(32);
+	} > FLASH
 
 	__data_load_start__ = ALIGN (4);
 
