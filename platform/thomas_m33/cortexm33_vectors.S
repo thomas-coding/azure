@@ -26,7 +26,7 @@ _vectors:
   .word 0 // Reserved
   .word 0 // Reserved
   .word 0 // Reserved
-#ifdef TX_SINGLE_MODE_SECURE
+#if defined(TX_SINGLE_MODE_SECURE) || defined(TX_SINGLE_MODE_NON_SECURE)
   .word 0 // Reserved
 #else
   .word SVC_Handler

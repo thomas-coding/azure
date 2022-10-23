@@ -209,13 +209,22 @@ CHAR    *pointer = TX_NULL;
 }
 
 #ifdef SIMPLE_DEMO
+void call_secure_world(void)
+{
+	asm volatile ("push {r0-r12, lr}");
+	asm volatile ("ldr r0, =0x10100001");
+	asm volatile ("blx r0");
+	asm volatile ("nop");
+	asm volatile ("pop {r0-r12, lr}");
+}
+
 void    simple_thread_0_entry(ULONG thread_input)
 {
     printf("simple thread 0 start======\n");
     while(1)
     {
         printf("simple thread 0 running\n");
-
+        //call_secure_world();//test call secure world
         for(int i = 0; i < 0xfffffff; i++)
             asm volatile("nop");
         /* Sleep for 100 ticks.  */

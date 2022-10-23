@@ -60,7 +60,14 @@ add_subdirectory(../../threadx threadx)
 link_libraries(threadx)
 
 # Link target
+if(${CONFIG_TX_SINGLE_MODE_SECURE})
 set(LD_SCRIPT "thomas_m33.ld")
+elseif(CONFIG_TX_SINGLE_MODE_NON_SECURE)
+set(LD_SCRIPT "thomas_m33_ns.ld")
+else()
+message(FATAL_ERROR "Don't know run on secure or non-secure")
+endif()
+
 set(CMAKE_EXE_LINKER_FLAGS "-T ${CMAKE_HOME_DIRECTORY}/${LD_SCRIPT} \
     -Wl,-Map=linkmap.txt,--build-id=none -nostartfiles")
 
