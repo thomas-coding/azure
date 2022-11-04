@@ -10,4 +10,7 @@ set(VFP_FLAGS "")
 set(SPEC_FLAGS "--specs=nosys.specs")
 # set(LD_FLAGS "-nostartfiles")
 
+# Mbedtls config
+set(MBEDTLS_FLAGS "-DMBEDTLS_CONFIG_FILE='<user_mbedtls_config.h>'")
+
 include(${CMAKE_CURRENT_LIST_DIR}/arm-none-eabi.cmake)

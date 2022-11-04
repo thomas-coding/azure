@@ -59,6 +59,16 @@ endif()
 add_subdirectory(../../threadx threadx)
 link_libraries(threadx)
 
+if(${CONFIG_MBEDTLS})
+    include_directories(../../../mbedtls/include/mbedtls)
+    include_directories(../../../mbedtls/include/psa)
+    add_definitions(-DINCLUDE_MBEDTLS)
+    set(ENABLE_TESTING          OFF           CACHE BOOL      "Enable Test")
+    set(ENABLE_PROGRAMS          OFF           CACHE BOOL      "Enable programs")
+    add_subdirectory(../../../mbedtls mbedtls)
+    link_libraries(mbedtls mbedcrypto mbedx509)
+endif()
+
 # Link target
 if(${CONFIG_TX_SINGLE_MODE_SECURE})
 set(LD_SCRIPT "thomas_m33.ld")

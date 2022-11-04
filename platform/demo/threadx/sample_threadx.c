@@ -4,6 +4,9 @@
 
 #include "tx_api.h"
 #include <stdio.h>
+#ifdef INCLUDE_MBEDTLS
+#include "sha1.h"
+#endif
 
 #define DEMO_STACK_SIZE         1024
 #define DEMO_BYTE_POOL_SIZE     9120
@@ -70,7 +73,9 @@ void    simple_thread_1_entry(ULONG thread_input);
 int main()
 {
     printf("enter main\n");
-
+#ifdef INCLUDE_MBEDTLS
+    mbedtls_sha1_self_test(1);
+#endif
     /* Enter the ThreadX kernel.  */
     tx_kernel_enter();
 }
