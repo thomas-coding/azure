@@ -69,6 +69,15 @@ if(${CONFIG_MBEDTLS})
     link_libraries(mbedtls mbedcrypto mbedx509)
 endif()
 
+# Tinycrypt
+if(${CONFIG_TINYCRYPT})
+    add_definitions(-DINCLUDE_TINYCRYPT)
+    include_directories(../../../tinycrypt/lib/include)
+    aux_source_directory(../../../tinycrypt/lib/source TINYCRYPT_SRC_LIST)
+    add_library(tinycrypt STATIC ${TINYCRYPT_SRC_LIST})
+    link_libraries(tinycrypt)
+endif()
+
 # Link target
 if(${CONFIG_TX_SINGLE_MODE_SECURE})
 set(LD_SCRIPT "thomas_m33.ld")

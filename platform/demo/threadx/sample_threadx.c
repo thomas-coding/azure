@@ -7,6 +7,10 @@
 #ifdef INCLUDE_MBEDTLS
 #include "sha1.h"
 #endif
+#ifdef INCLUDE_TINYCRYPT
+#include <tinycrypt/sha256.h>
+#include <tinycrypt/constants.h>
+#endif
 
 #define DEMO_STACK_SIZE         1024
 #define DEMO_BYTE_POOL_SIZE     9120
@@ -68,6 +72,32 @@ void    simple_thread_0_entry(ULONG thread_input);
 void    simple_thread_1_entry(ULONG thread_input);
 #endif
 
+#ifdef INCLUDE_TINYCRYPT
+unsigned int tinycrypt_test(void)
+{
+        unsigned int result = 0;
+
+        printf("SHA256 test \n");
+        const uint8_t expected[32] = {
+		0xba, 0x78, 0x16, 0xbf, 0x8f, 0x01, 0xcf, 0xea, 0x41, 0x41, 0x40, 0xde,
+		0x5d, 0xae, 0x22, 0x23, 0xb0, 0x03, 0x61, 0xa3, 0x96, 0x17, 0x7a, 0x9c,
+		0xb4, 0x10, 0xff, 0x61, 0xf2, 0x00, 0x15, 0xad
+        };
+        const char *m = "abc";
+        uint8_t digest[32];
+        struct tc_sha256_state_struct s;
+
+        (void)tc_sha256_init(&s);
+        tc_sha256_update(&s, (const uint8_t *) m, strlen(m));
+        (void)tc_sha256_final(digest, &s);
+        if(!memcmp(digest, expected, 32))
+            printf("SHA256 test PASS\n");
+        else
+            printf("SHA256 test Fail\n");
+        return result;
+}
+#endif
+
 /* Define main entry point.  */
 
 int main()
@@ -75,6 +105,9 @@ int main()
     printf("enter main\n");
 #ifdef INCLUDE_MBEDTLS
     mbedtls_sha1_self_test(1);
+#endif
+#ifdef INCLUDE_TINYCRYPT
+    tinycrypt_test();
 #endif
     /* Enter the ThreadX kernel.  */
     tx_kernel_enter();
